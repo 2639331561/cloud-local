@@ -1,0 +1,23 @@
+server:
+  port: 55556
+spring:
+  cloud:
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: 120.79.95.51
+    port: 5672
+    username: rabbitmq
+    password: 123456
+zuul:
+  routes:
+    api-member:
+      path: /member/**
+      serviceId: member
+    api-goods:
+      path: /goods/**
+      serviceId: goods
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 10000
