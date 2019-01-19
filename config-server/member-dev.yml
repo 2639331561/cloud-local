@@ -62,8 +62,8 @@ mybatis:
 #hystrix的超时时间
 hystrix:
   threadpool:
-    service-provider:
-      core-size: 250
+    default:
+      core-size: 100
   command:
       default:
           execution:
