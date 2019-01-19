@@ -1,5 +1,10 @@
 server:
   port: 44443
+  undertow:
+    io-threads: 16
+    worker-threads: 256
+    buffer-size: 1024
+    direct-buffers: true
 spring:
   cloud:
     bus:
@@ -23,41 +28,36 @@ spring:
     web:
       skipPattern: (^cleanup.*)
   datasource:
-    druid:
-      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=CTT&characterEncoding=UTF-8&autoReconnect=true
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      initial-size: 5
-      min-idle: 10
-      max-active: 2000
-      max-wait: 10000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      pool-prepared-statements: false
-      max-pool-prepared-statement-per-connection-size: 20
-      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-      use-global-data-source-stat: true
-      validation-query: SELECT 1
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=CTT&characterEncoding=UTF-8&autoReconnect=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 100
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: HikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
   redis:
-    host: 192.168.0.202
-    port: 50001
+    host: 127.0.0.1
+    port: 6379
     database: 0
-    password: 5F*hDgVA$il0F$5G
+    password: 123456
     timeout: 5000
     jedis:
       pool:
-        max-active: 1000
+        max-active: 100
         max-idle: 50
         min-idle: 2
 mybatis:
   type-aliases-package: com.fanglin.clouddemo.auth.bean
   mapper-locations: classpath:mapper/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 #hystrix的超时时间
 hystrix:
@@ -85,9 +85,4 @@ feign:
 # 日志支持
 logging:
   level:
-    com:
-      project:
-        clouddemo:
-          member:
-            api:
-              MemberAPI: DEBUG
+    root: info
