@@ -1,5 +1,10 @@
 server:
   port: 44445
+  undertow:
+    io-threads: 16
+    worker-threads: 256
+    buffer-size: 1024
+    direct-buffers: true
 spring:
   cloud:
     bus:
@@ -88,9 +93,3 @@ tx-lcn:
 logging:
   level:
     root: info
-    com:
-      project:
-        clouddemo:
-          member:
-            api:
-              MemberAPI: warn

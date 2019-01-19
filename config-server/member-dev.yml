@@ -1,5 +1,10 @@
 server:
   port: 44444
+  undertow:
+    io-threads: 16
+    worker-threads: 256
+    buffer-size: 1024
+    direct-buffers: true
 spring:
   cloud:
     bus:
