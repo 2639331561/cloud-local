@@ -61,6 +61,9 @@ mybatis:
     map-underscore-to-camel-case: true
 #hystrix的超时时间
 hystrix:
+  threadpool:
+    service-provider:
+      core-size: 150
   command:
       default:
           execution:
