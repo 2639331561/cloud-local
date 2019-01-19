@@ -63,7 +63,7 @@ mybatis:
 hystrix:
   threadpool:
     default:
-      core-size: 100
+      core-size: 2
   command:
       default:
           execution:
